@@ -15,5 +15,9 @@
     "apollo-server"
   ],
   "author": "sajibAdhi",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.12.1",
+    "graphql": "^16.8.0"
+  }
 }
