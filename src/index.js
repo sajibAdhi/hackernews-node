@@ -14,12 +14,11 @@ const resolvers = {
   Query: {
     info: () => `This is the API of a Hackernews Clone`,
     feed: () => links,
+    link: (parent, args) =>  links.find(link => link.id === args.id),
   },
 
   Mutation: {
-    // 2
     post: (parent, args) => {
-
       let idCount = links.length
 
       const link = {
@@ -29,14 +28,21 @@ const resolvers = {
       }
       links.push(link)
       return link
-    }
-  },
+    },
 
-  Link: {
-    id: (parent) => parent.id,
-    description: (parent) => parent.description,
-    url: (parent) => parent.url,
-  }
+    updateLink: (parent, args) => {
+      const link = links.find(link => link.id === args.id)
+      link.url = args.url ?? link.url
+      link.description = args.description ?? link.description
+      return link
+    },
+
+    deleteLink: (parent, args) => {
+      const link = links.find(link => link.id === args.id)
+      links = links.filter(link => link.id !== args.id)
+      return link
+    },
+  },
 }
 
 const server = new ApolloServer({
